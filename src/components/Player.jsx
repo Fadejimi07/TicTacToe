@@ -5,18 +5,17 @@ export default function Player({ name, symbol }) {
     const [newName, setNewName] = useState(name);
 
     function handleButtonClick() {
-        if (editing) {
-            setEditing(false);
-            setNewName(document.querySelector("input").value);
-        } else {
-            setEditing(true);
-        }
+        setEditing(editing => !editing);
+    }
+
+    function handleChange(event) {
+        setNewName(event.target.value);
     }
 
     return (
         <li>
             <span className="player">
-                {editing ? <input type="text" required /> : <span className="player-name">{newName}</span>}
+                {editing ? <input type="text" required value={newName} onChange={handleChange} /> : <span className="player-name">{newName}</span>}
                 <span className="player-symbol">{symbol}</span>
             </span>
             <button onClick={handleButtonClick}>{editing ? "Save" : "Edit"}</button>
