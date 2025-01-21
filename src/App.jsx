@@ -4,18 +4,21 @@ import Player from "./components/Player";
 import GameBoard from "./components/Gameboard";
 import Log from "./components/Log";
 
+function deviveActivePlayer(turns) {
+  if (turns.length === 0) {
+    return 'X';
+  }
+
+  return turns[0].player === 'X' ? 'O' : 'X';
+}
+
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
-  const [currentPlayer, setCurrentPlayer] = useState("X");
+  const currentPlayer = deviveActivePlayer(gameTurns);
 
   function handlePlayerChange(rowIndex, colIndex) {
-    setCurrentPlayer((currentPlayer) => (currentPlayer === "X" ? "O" : "X"));
     setGameTurns(prevTurns => {
-      let activePlayer = 'X';
-
-      if (prevTurns.length > 0 && prevTurns[0].player === 'X') {
-        activePlayer = 'O';
-      }
+      const activePlayer = deviveActivePlayer(prevTurns);
 
       const updatedTurns = [
         { square: { row: rowIndex, col: colIndex }, player: activePlayer },
